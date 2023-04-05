@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics.pairwise import cosine_similarity
 import plotly.express as px
 
 
@@ -190,3 +192,70 @@ def overall_attributes(fifa: pd.DataFrame):
 
         polar=dict(radialaxis=dict(range=[13, 80])))
     return fig
+
+
+def get_similar_players(fifa, player_name):
+    normalized_data = fifa
+    normalized_data = normalized_data.drop(columns=['Age', 'Nationality', 'Club', 'Value',
+            'Wage', 'Joined','Release Clause','Height', 'Weight', 'Name','Goalkeeping', 'GK Diving', 'GK Handling',
+            'GK Kicking', 'GK Positioning', 'GK Reflexes','Player Photo','Club Logo','Flag Photo','ID', 'OVA', 'BOV', 
+            'BP', 'Position','POT', 'Team & Contract', 'foot', 'Growth', 'Loan Date End', 'Contract','W/F', 'SM', 'A/W',
+            'D/W', 'IR', 'PAC', 'SHO', 'PAS', 'DRI', 'DEF', 'PHY', 'Hits', 'LS','ST', 'RS', 'LW', 'LF', 'CF', 'RF', 'RW', 
+            'LAM', 'CAM', 'RAM', 'LM','LCM', 'CM', 'RCM', 'RM', 'LWB', 'LDM', 'CDM', 'RDM', 'RWB', 'LB',
+            'LCB', 'CB', 'RCB', 'RB', 'GK', 'Gender','Total Stats', 'Base Stats','Vision'
+            ],axis=1)
+    scaler = MinMaxScaler()
+    scaled_values = scaler.fit_transform(normalized_data)
+    normalized_data.loc[:,:] = scaled_values
+    normalized_data['Name'] = fifa['Name']
+    col_name = "Name"
+    first_col = normalized_data.pop(col_name)
+    normalized_data.insert(0, col_name, first_col)
+    player_index = [list(normalized_data['Name']).index(x) for x in list(normalized_data['Name']) if player_name in x]
+    player_index = int(player_index[0])
+    df = normalized_data.iloc[:,1:]
+    cos = cosine_similarity(df, df)
+    player_cos = sorted(list(cos[player_index]))[-4:-1]
+    indexes = [list(cos[player_index]).index(x) for x in player_cos]
+    indexes.append(player_index)
+    nor_data= normalized_data.iloc[indexes].melt(id_vars=['Name'], var_name='Attribute', value_name='Value')
+    images = []
+    for img in fifa.iloc[indexes]['Player Photo'].values:
+        img = img.split('/')
+        img[2] = 'cdn.sofifa.net'
+        images.append('/'.join(img))
+    fig = px.line_polar(
+            nor_data, 
+            color='Name',
+            r='Value',
+            theta='Attribute',
+
+
+            line_close=True,
+        )
+    x_intercept = [0.1,0.1,0.9,0.9]
+    y_intercept = [0.0,0.8,0.0,0.8]  
+    for i in range(4):
+        url = images[i]
+        headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'}
+        req = urllib.request.Request(url, headers=headers)
+        response = urllib.request.urlopen(req)
+        with open('1.png', 'wb') as f:
+        f.write(response.read())
+
+        pic = Image.open("1.png")
+        fig.add_layout_image(
+            dict(
+                source=pic,
+                x=x_intercept[i],
+                y=y_intercept[i],
+            ))
+    fig.update_layout_images(dict(
+            xref="paper",
+            yref="paper",
+            sizex=0.3,
+            sizey=0.3,
+            xanchor="right",
+            yanchor="bottom"
+    ))
+    return fig,indexes
