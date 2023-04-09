@@ -42,8 +42,8 @@ def club_wise_player(fifa : pd.DataFrame, template: str):
     """
     clb_cnt=fifa.groupby('Club').apply(lambda x:x['Name'].count()).reset_index(name='Counts')
     clb_cnt.sort_values(by='Counts',ascending=False,inplace=True)
-    top_20_clb_cnt=clb_cnt[:40]
-    fig=px.bar(top_20_clb_cnt,x='Club',y='Counts',color='Counts',title='Club-wise Distribution of Players in FIFA for Top 40 Clubs')
+    top_20_clb_cnt=clb_cnt[:20]
+    fig=px.bar(top_20_clb_cnt,x='Club',y='Counts',color='Counts',title='Club-wise Distribution of Players in FIFA for Top 20 Clubs')
     return fig
 
 def club_wise_over_performing_players(fifa : pd.DataFrame, template: str):
@@ -78,26 +78,28 @@ def height_vs_weight_variation(fifa: pd.DataFrame, template: str):
     fig=px.scatter(props,x='Weight in lb',y='Ht in cm',color='Ht in cm',size='Weight in lb',hover_data=['Name','Nationality','Club'],title='Overall Height vs Weight Variation of the players in FIFA 21')
     return fig
 
-def players_position(fifa : pd.DataFrame):
+def players_position(fifa : pd.DataFrame, template: str):
     """
     This function returns a bar plot of the top 20 positions with the highest number of players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
+    :param template: application theme
     :return: A bar plot of the top 20 positions with the highest number of players in the FIFA game.
     """
     pos_cnt=fifa.groupby('BP').apply(lambda x:x['Name'].count()).reset_index(name='Counts')
     pos_cnt.sort_values(by='Counts',ascending=False,inplace=True)
     top_20_pos_cnt=pos_cnt[:20]
-    fig=px.bar(top_20_pos_cnt,x='BP',y='Counts',color='Counts',title='Positionwise Player counts in FIFA 21')
+    fig=px.bar(top_20_pos_cnt,x='BP',y='Counts',color='Counts',title='Top 20 Position-wise Player counts in FIFA')
     return fig
 
-def age_distribution(fifa: pd.DataFrame):
+def age_distribution(fifa: pd.DataFrame, template: str):
     """
     This function returns a histogram of the Age distribution of the players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
+    :param template: application theme
     :return: A histogram of the Age distribution of the players in the FIFA game.
     """
     age_cnt=fifa.groupby('Age').apply(lambda x:x['Name'].count()).reset_index(name='Counts')
-    fig=px.bar(age_cnt,x='Age',y='Counts',color='Counts',title='Agewise Player distribution in FIFA 21')
+    fig=px.bar(age_cnt,x='Age',y='Counts',color='Counts',title='Agewise Player distribution in FIFA')
     return fig
 
 def distibution_of_market_value_and_wage(fifa: pd.DataFrame):

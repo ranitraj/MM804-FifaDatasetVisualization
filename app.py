@@ -29,7 +29,7 @@ def init_text_field(value: str, reference: str):
                             href=reference,
                         )
                     ], style={'textAlign': 'center'})
-                ], style={'background-color': '#FFEBEE'})
+                ], style={'background-color': '#E8EAF6'})
             ),
         ]
     )
@@ -91,6 +91,16 @@ plot_scatter_club_wise_over_performing_players = dv.club_wise_over_performing_pl
 )
 
 plot_scatter_height_vs_weight_variation = dv.height_vs_weight_variation(
+    df,
+    default_theme
+)
+
+plot_bar_player_position = dv.players_position(
+    df,
+    default_theme
+)
+
+plot_histogram_age_distribution = dv.age_distribution(
     df,
     default_theme
 )
@@ -176,7 +186,7 @@ app.layout = html.Div([
                 ], width=6)
             ], align='center'),
             html.Br(),
-            # 1-Plot Row
+            # 2-Plot Rows
             dbc.Row([
                 dbc.Col([
                     init_figure(
@@ -210,7 +220,7 @@ app.layout = html.Div([
                 ], width=12, align='center')
             ], align='center'),
             html.Br(),
-            # 2-Plot Rows
+            # 1-Plot Row
             dbc.Row([
                 dbc.Col([
                     init_figure(
@@ -222,7 +232,47 @@ app.layout = html.Div([
                     width=12,
                     align='center'
                 ),
-            ], align='center')
+            ], align='center'),
+            html.Br(),
+            html.Br(),
+
+            # 2-Text Header Rows
+            dbc.Row([
+                dbc.Col([
+                    init_text_field(
+                        "Player Position",
+                        "#barPlot_playerPosition"
+                    )
+                ], width=6),
+                dbc.Col([
+                    init_text_field(
+                        "Player Age Distribution",
+                        "#histogramPlot_playerAgeDistribution"
+                    )
+                ], width=6)
+            ], align='center'),
+            html.Br(),
+            # 2-Plot Rows
+            dbc.Row([
+                dbc.Col([
+                    init_figure(
+                        "player_position",
+                        plot_bar_player_position
+                    )
+                ],
+                    id="barPlot_playerPosition",
+                    width=6
+                ),
+                dbc.Col([
+                    init_figure(
+                        "player_age_distribution",
+                        plot_histogram_age_distribution
+                    )
+                ],
+                    id="histogramPlot_playerAgeDistribution",
+                    width=6
+                ),
+            ], align='center'),
 
 
         ], style={'background-color': '#fafafa'})
