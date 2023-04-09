@@ -15,7 +15,7 @@ def nation_wise_participation(fifa: pd.DataFrame, template: str):
     nat_cnt=fifa.groupby('Nationality').apply(lambda x:x['Name'].count()).reset_index(name='Counts')
     nat_cnt.sort_values(by='Counts',ascending=False,inplace=True)
     top_20_nat_cnt=nat_cnt[:20]
-    fig=px.bar(top_20_nat_cnt,x='Nationality',y='Counts',color='Counts',title='Nation-wise Distribution of Players in FIFA')
+    fig=px.bar(top_20_nat_cnt,x='Nationality',y='Counts',color='Counts',title='Nation-wise Distribution of Players in FIFA for Top 20 Nations')
     return fig
 
 def nation_over_performing_players(fifa : pd.DataFrame, template: str):
@@ -30,7 +30,7 @@ def nation_over_performing_players(fifa : pd.DataFrame, template: str):
     snt_best_avg_cnt=pd.merge(cnt_best_avg,cnt_best_cnt,how='inner',left_on='Nationality',right_on='Nationality')
     sel_best_avg_cnt=snt_best_avg_cnt[snt_best_avg_cnt['Player Counts']>=200]
     sel_best_avg_cnt.sort_values(by=['Overall Ratings','Player Counts'],ascending=[False,False])
-    fig = px.scatter(sel_best_avg_cnt,x='Overall Ratings',y='Player Counts',color='Player Counts',size='Overall Ratings',hover_data=['Nationality'],title='Nationwise Player counts and Average Potential')
+    fig = px.scatter(sel_best_avg_cnt,x='Overall Ratings',y='Player Counts',color='Player Counts',size='Overall Ratings',hover_data=['Nationality'],title='Overall Nationwise Player counts and Average Potential')
     return fig
 
 def club_wise_player(fifa : pd.DataFrame, template: str):
@@ -42,10 +42,11 @@ def club_wise_player(fifa : pd.DataFrame, template: str):
     """
     clb_cnt=fifa.groupby('Club').apply(lambda x:x['Name'].count()).reset_index(name='Counts')
     clb_cnt.sort_values(by='Counts',ascending=False,inplace=True)
-    fig=px.scatter(clb_cnt,x='Club',y='Counts',color='Counts',title='Clubwise Player counts in FIFA 21')
+    top_20_clb_cnt=clb_cnt[:40]
+    fig=px.bar(top_20_clb_cnt,x='Club',y='Counts',color='Counts',title='Club-wise Distribution of Players in FIFA for Top 40 Clubs')
     return fig
 
-def club_wise_over_performing_players(fifa : pd.DataFrame,  template: str):
+def club_wise_over_performing_players(fifa : pd.DataFrame, template: str):
     """
     This function returns a scatter plot of the Clubwise Player counts and Average Potential
     :param fifa: The dataframe containing the FIFA game data
@@ -57,15 +58,16 @@ def club_wise_over_performing_players(fifa : pd.DataFrame,  template: str):
     snt_best_avg_cnt=pd.merge(cnt_best_avg,cnt_best_cnt,how='inner',left_on='Club',right_on='Club')
     sel_best_avg_cnt=snt_best_avg_cnt[snt_best_avg_cnt['Player Counts']>=25]
     sel_best_avg_cnt.sort_values(by=['Overall Ratings','Player Counts'],ascending=[False,False])
-    fig = px.scatter(sel_best_avg_cnt,x='Overall Ratings',y='Player Counts',color='Player Counts',size='Overall Ratings',hover_data=['Club'],title='Clubwise player counts and Average Potential')
+    fig = px.scatter(sel_best_avg_cnt,x='Overall Ratings',y='Player Counts',color='Player Counts',size='Overall Ratings',hover_data=['Club'],title='Overall Clubwise player counts and Average Potential')
     return fig
 
 ## player stats
 
-def height_vs_weight_variation(fifa: pd.DataFrame):
+def height_vs_weight_variation(fifa: pd.DataFrame, template: str):
     """
     This function returns a scatter plot of the Height vs Weight Variation of the players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
+    :param template: application theme
     :return: A scatter plot of the Height vs Weight Variation of the players in the FIFA game.
     """
     props=fifa[['Name','Nationality','Club','Height','Weight']]
@@ -73,7 +75,7 @@ def height_vs_weight_variation(fifa: pd.DataFrame):
     props['Ht in in']=pd.to_numeric(props['Height'].str.split("\'").str[1].str.strip('"'))
     props['Ht in cm']=(props['Ht in ft']*12+props['Ht in in'])*2.54
     props['Weight in lb']=pd.to_numeric(props['Weight'].str.strip('lbs'))
-    fig=px.scatter(props,x='Weight in lb',y='Ht in cm',color='Ht in cm',size='Weight in lb',hover_data=['Name','Nationality','Club'],title='Height vs Weight Variation of the players in FIFA 21')
+    fig=px.scatter(props,x='Weight in lb',y='Ht in cm',color='Ht in cm',size='Weight in lb',hover_data=['Name','Nationality','Club'],title='Overall Height vs Weight Variation of the players in FIFA 21')
     return fig
 
 def players_position(fifa : pd.DataFrame):

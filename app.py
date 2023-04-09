@@ -90,6 +90,11 @@ plot_scatter_club_wise_over_performing_players = dv.club_wise_over_performing_pl
     default_theme
 )
 
+plot_scatter_height_vs_weight_variation = dv.height_vs_weight_variation(
+    df,
+    default_theme
+)
+
 # Application layout
 app.layout = html.Div([
     dbc.Card(
@@ -171,7 +176,7 @@ app.layout = html.Div([
                 ], width=6)
             ], align='center'),
             html.Br(),
-            # 2-Plot Rows
+            # 1-Plot Row
             dbc.Row([
                 dbc.Col([
                     init_figure(
@@ -191,7 +196,35 @@ app.layout = html.Div([
                     id="scatterPlot_clubWiseOverPerformers",
                     width=6
                 ),
+            ], align='center'),
+            html.Br(),
+            html.Br(),
+
+            # 1-Text Header Row
+            dbc.Row([
+                dbc.Col([
+                    init_text_field(
+                        "Height vs Weight Variation",
+                        "#scatterPlot_heightVsWeightVariation"
+                    )
+                ], width=12, align='center')
+            ], align='center'),
+            html.Br(),
+            # 2-Plot Rows
+            dbc.Row([
+                dbc.Col([
+                    init_figure(
+                        "height_weight_variation",
+                        plot_scatter_height_vs_weight_variation
+                    )
+                ],
+                    id="scatterPlot_heightVsWeightVariation",
+                    width=12,
+                    align='center'
+                ),
             ], align='center')
+
+
         ], style={'background-color': '#fafafa'})
     )
 ]
@@ -238,6 +271,16 @@ def update_figure(toggle):
     template = default_theme if toggle else dark_theme
     result_club_wise_over_performing_players = dv.club_wise_over_performing_players(df, template)
     return result_club_wise_over_performing_players
+
+
+@app.callback(
+    Output("height_weight_variation", "figure"),
+    Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
+)
+def update_figure(toggle):
+    template = default_theme if toggle else dark_theme
+    result_height_weight_variation = dv.height_vs_weight_variation(df, template)
+    return result_height_weight_variation
 
 
 # Run the application
