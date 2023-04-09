@@ -34,7 +34,12 @@ plot_scatter_nation_wise_over_performing_players = dv.nation_over_performing_pla
     default_theme
 )
 
-plot_scatter_club_wise_players = dv.clubwise_player(
+plot_scatter_club_wise_players = dv.club_wise_player(
+    df,
+    default_theme
+)
+
+plot_scatter_club_wise_over_performing_players = dv.club_wise_over_performing_players(
     df,
     default_theme
 )
@@ -74,15 +79,20 @@ app.layout = html.Div(
                                 href="#barPlot_nationWiseParticipation",
                             ),
                             html.A(
-                                "Over-performing Players",
+                                "Nation-wise Over-performing Players",
                                 className="list-group-item list-group-item-action",
                                 href="#scatterPlot_nationWiseOverPerformers",
                             ),
                             html.A(
-                                "Club-wise Players",
+                                "Club-wise Participation",
                                 className="list-group-item list-group-item-action",
                                 href="#scatterPlot_clubWisePlayers",
-                            )
+                            ),
+                            html.A(
+                                "Club-wise Over-performing Players",
+                                className="list-group-item list-group-item-action",
+                                href="#scatterPlot_clubWiseOverPerformers",
+                            ),
                         ],
                         id="menu",
                         className="list-group position-fixed",
@@ -111,6 +121,13 @@ app.layout = html.Div(
                                 figure=plot_scatter_club_wise_players,
                             ),
                             id="scatterPlot_clubWisePlayers",
+                        ),
+                        dbc.Row(
+                            dcc.Graph(
+                                id="club_wise_over_performing_players",
+                                figure=plot_scatter_club_wise_over_performing_players,
+                            ),
+                            id="scatterPlot_clubWiseWiseOverPerformers",
                         ),
                     ],
                     className="scrollspy-example col",
@@ -150,8 +167,17 @@ def update_figure(toggle):
 )
 def update_figure(toggle):
     template = default_theme if toggle else dark_theme
-    result_club_wise_players = dv.clubwise_player(df, template)
+    result_club_wise_players = dv.club_wise_player(df, template)
     return result_club_wise_players
+
+@app.callback(
+    Output("club_wise_over_performing_players", "figure"),
+    Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
+)
+def update_figure(toggle):
+    template = default_theme if toggle else dark_theme
+    result_club_wise_over_performing_players = dv.club_wise_over_performing_players(df, template)
+    return result_club_wise_over_performing_players
 
 
 # Run the application
