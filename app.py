@@ -92,7 +92,7 @@ app.layout = html.Div(
     Output("nation_wise_participation", "figure"),
     Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
 )
-def update_figure(year, toggle):
+def update_figure(toggle):
     template = default_theme if toggle else dark_theme
     fig_top_food_elements_in_year_x = dv.nation_wise_participation(df, template)
     return fig_top_food_elements_in_year_x
