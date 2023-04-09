@@ -29,7 +29,7 @@ def init_text_field(value: str, reference: str):
                             href=reference,
                         )
                     ], style={'textAlign': 'center'})
-                ], style={'background': 'LightGray'})
+                ], style={'background-color': '#FFEBEE'})
             ),
         ]
     )
@@ -192,7 +192,7 @@ app.layout = html.Div([
                     width=6
                 ),
             ], align='center')
-        ])
+        ], style={'background-color': '#fafafa'})
     )
 ]
 #, className="dbc all-row-margin container"
