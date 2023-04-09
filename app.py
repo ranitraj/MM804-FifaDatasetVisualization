@@ -151,101 +151,52 @@ app.layout = html.Div([
                     id="scatterPlot_nationWiseOverPerformers",
                     width=6
                 ),
+            ], align='center'),
+            html.Br(),
+            html.Br(),
+
+            # 2-Text Header Rows
+            dbc.Row([
+                dbc.Col([
+                    init_text_field(
+                        "Club-wise Participation",
+                        "#scatterPlot_clubWisePlayers"
+                    )
+                ], width=6),
+                dbc.Col([
+                    init_text_field(
+                        "Club-wise Over-performing Players",
+                        "#scatterPlot_clubWiseOverPerformers"
+                    )
+                ], width=6)
+            ], align='center'),
+            html.Br(),
+            # 2-Plot Rows
+            dbc.Row([
+                dbc.Col([
+                    init_figure(
+                        "club_wise_players",
+                        plot_scatter_club_wise_players
+                    )
+                ],
+                    id="scatterPlot_clubWisePlayers",
+                    width=6
+                ),
+                dbc.Col([
+                    init_figure(
+                        "club_wise_over_performing_players",
+                        plot_scatter_club_wise_over_performing_players
+                    )
+                ],
+                    id="scatterPlot_clubWiseOverPerformers",
+                    width=6
+                ),
             ], align='center')
         ])
     )
-])
-
-
-# app.layout = html.Div(
-#     [
-#         dbc.Row(
-#             dbc.Col(
-#                 html.Div(
-#                     "Team-A: Visualizing the FIFA Dataset",
-#                     className="display-3 text-primary text-center",
-#                 ),
-#                 class_name="center-flex mt-3",
-#             )
-#         ),
-#         dbc.Row(
-#             dbc.Col(
-#                 html.Strong(
-#                     "FIFA: International Federation of Association Football",
-#                     className="display-6 mb-3 text-danger text-center",
-#                 ),
-#                 class_name="center-flex",
-#             )
-#         ),
-#         dbc.Row(
-#             [
-#                 dbc.Col(
-#                     html.Div(
-#                         [
-#                             dbc.Row(
-#                                 theme_switcher, class_name="justify-content-start mb-2"
-#                             ),
-#                             ,
-#                             html.A(
-#                                 "Nation-wise Over-performing Players",
-#                                 className="list-group-item list-group-item-action",
-#                                 href="#scatterPlot_nationWiseOverPerformers",
-#                             ),
-#                             html.A(
-#                                 "Club-wise Participation",
-#                                 className="list-group-item list-group-item-action",
-#                                 href="#scatterPlot_clubWisePlayers",
-#                             ),
-#                             html.A(
-#                                 "Club-wise Over-performing Players",
-#                                 className="list-group-item list-group-item-action",
-#                                 href="#scatterPlot_clubWiseOverPerformers",
-#                             ),
-#                         ],
-#                         id="menu",
-#                         className="list-group position-fixed",
-#                     ),
-#                     width=3,
-#                 ),
-#                 html.Div(
-#                     [
-#                         dbc.Row(
-#                             dcc.Graph(
-#                                 id="nation_wise_participation",
-#                                 figure=plot_bar_nation_wise_participation,
-#                             ),
-#                             id="barPlot_nationWiseParticipation",
-#                         ),
-#                         dbc.Row(
-#                             dcc.Graph(
-#                                 id="over_performing_players",
-#                                 figure=plot_scatter_nation_wise_over_performing_players,
-#                             ),
-#                             id="scatterPlot_nationWiseOverPerformers",
-#                         ),
-#                         dbc.Row(
-#                             dcc.Graph(
-#                                 id="club_wise_players",
-#                                 figure=plot_scatter_club_wise_players,
-#                             ),
-#                             id="scatterPlot_clubWisePlayers",
-#                         ),
-#                         dbc.Row(
-#                             dcc.Graph(
-#                                 id="club_wise_over_performing_players",
-#                                 figure=plot_scatter_club_wise_over_performing_players,
-#                             ),
-#                             id="scatterPlot_clubWiseWiseOverPerformers",
-#                         ),
-#                     ],
-#                     className="scrollspy-example col",
-#                     **{"data-spy": "scroll", "data-offset": "0", "data-target": "#menu"}
-#                 ),
-#             ]
-#         ),
-#     ],
-#     className="dbc all-row-margin container",
-# )
+]
+#, className="dbc all-row-margin container"
+)
 
 
 # Method Callbacks
