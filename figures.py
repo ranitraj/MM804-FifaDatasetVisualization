@@ -5,16 +5,17 @@ from sklearn.metrics.pairwise import cosine_similarity
 import plotly.express as px
 
 
-def nationnwise_participation(fifa: pd.DataFrame):
+def nation_wise_participation(fifa: pd.DataFrame, template: str):
     """
     This function returns a bar plot of the top 20 nations with the highest number of players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
+    :param template: application theme
     :return: A bar plot of the top 20 nations with the highest number of players in the FIFA game.
     """
     nat_cnt=fifa.groupby('Nationality').apply(lambda x:x['Name'].count()).reset_index(name='Counts')
     nat_cnt.sort_values(by='Counts',ascending=False,inplace=True)
     top_20_nat_cnt=nat_cnt[:20]
-    fig=px.bar(top_20_nat_cnt,x='Nationality',y='Counts',color='Counts',title='Nationwise Representation in the FIFA Game')
+    fig=px.bar(top_20_nat_cnt,x='Nationality',y='Counts',color='Counts',title='Nation-wise Distribution of Players in FIFA')
     return fig
 
 def nation_overperforming_players(fifa : pd.DataFrame):
@@ -241,7 +242,7 @@ def get_similar_players(fifa, player_name):
         req = urllib.request.Request(url, headers=headers)
         response = urllib.request.urlopen(req)
         with open('1.png', 'wb') as f:
-        f.write(response.read())
+            f.write(response.read())
 
         pic = Image.open("1.png")
         fig.add_layout_image(
