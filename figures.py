@@ -33,10 +33,11 @@ def nation_over_performing_players(fifa : pd.DataFrame, template: str):
     fig = px.scatter(sel_best_avg_cnt,x='Overall Ratings',y='Player Counts',color='Player Counts',size='Overall Ratings',hover_data=['Nationality'],title='Nationwise Player counts and Average Potential')
     return fig
 
-def clubwise_player(fifa : pd.DataFrame):
+def clubwise_player(fifa : pd.DataFrame, template: str):
     """
     This function returns a scatter plot of the Clubwise Player counts in FIFA 21
     :param fifa: The dataframe containing the FIFA game data
+    :param template: application theme
     :return: A scatter plot of the Clubwise Player counts in FIFA 21
     """
     clb_cnt=fifa.groupby('Club').apply(lambda x:x['Name'].count()).reset_index(name='Counts')

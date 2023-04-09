@@ -24,9 +24,20 @@ theme_switcher = dbt.ThemeSwitchAIO(
 df = pd.read_csv(os.path.join("assets", "cleaned_fifa21_male2.csv"))
 
 # Plots and Figures
-plot_bar_nation_wise_participation = dv.nation_wise_participation(df, default_theme)
-plot_scatter_nation_wise_over_performing_players = dv.nation_over_performing_players(df, default_theme)
+plot_bar_nation_wise_participation = dv.nation_wise_participation(
+    df,
+    default_theme
+)
 
+plot_scatter_nation_wise_over_performing_players = dv.nation_over_performing_players(
+    df,
+    default_theme
+)
+
+plot_scatter_club_wise_players = dv.clubwise_player(
+    df,
+    default_theme
+)
 
 # Application layout
 app.layout = html.Div(
@@ -66,6 +77,11 @@ app.layout = html.Div(
                                 "Over-performing Players",
                                 className="list-group-item list-group-item-action",
                                 href="#scatterPlot_nationWiseOverPerformers",
+                            ),
+                            html.A(
+                                "Club-wise Players",
+                                className="list-group-item list-group-item-action",
+                                href="#scatterPlot_clubWisePlayers",
                             )
                         ],
                         id="menu",
@@ -88,6 +104,13 @@ app.layout = html.Div(
                                 figure=plot_scatter_nation_wise_over_performing_players,
                             ),
                             id="scatterPlot_nationWiseOverPerformers",
+                        ),
+                        dbc.Row(
+                            dcc.Graph(
+                                id="club_wise_players",
+                                figure=plot_scatter_club_wise_players,
+                            ),
+                            id="scatterPlot_clubWisePlayers",
                         ),
                     ],
                     className="scrollspy-example col",
@@ -119,6 +142,16 @@ def update_figure(toggle):
     template = default_theme if toggle else dark_theme
     result_over_performing_players = dv.nation_over_performing_players(df, template)
     return result_over_performing_players
+
+
+@app.callback(
+    Output("club_wise_players", "figure"),
+    Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
+)
+def update_figure(toggle):
+    template = default_theme if toggle else dark_theme
+    result_club_wise_players = dv.clubwise_player(df, template)
+    return result_club_wise_players
 
 
 # Run the application
