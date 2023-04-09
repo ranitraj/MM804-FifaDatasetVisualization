@@ -18,10 +18,11 @@ def nation_wise_participation(fifa: pd.DataFrame, template: str):
     fig=px.bar(top_20_nat_cnt,x='Nationality',y='Counts',color='Counts',title='Nation-wise Distribution of Players in FIFA')
     return fig
 
-def nation_overperforming_players(fifa : pd.DataFrame):
+def nation_over_performing_players(fifa : pd.DataFrame, template: str):
     """
     This function returns a scatter plot of the Nationwise Player counts and Average Potential
     :param fifa: The dataframe containing the FIFA game data
+    :param template: application theme
     :return: A scatter plot of the Nationwise Player counts and Average Potential
     """
     cnt_best_avg=fifa.groupby('Nationality').apply(lambda x:np.average(x['OVA'])).reset_index(name='Overall Ratings')

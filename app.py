@@ -10,14 +10,14 @@ from dash import Dash, dcc, html
 from dash.dependencies import Input, Output
 
 # Initialize the app & building components
-app = Dash(__name__, external_stylesheets=[dbc.themes.ZEPHYR])
+app = Dash(__name__, external_stylesheets=[dbc.themes.SPACELAB])
 
 # Theme Switcher
 default_theme = "zephyr"
 dark_theme = "vapor"
 theme_switcher = dbt.ThemeSwitchAIO(
     aio_id="theme",
-    themes=[dbc.themes.ZEPHYR, dbc.themes.VAPOR]
+    themes=[dbc.themes.SPACELAB, dbc.themes.SLATE]
 )
 
 # Dataset
@@ -25,6 +25,7 @@ df = pd.read_csv(os.path.join("assets", "cleaned_fifa21_male2.csv"))
 
 # Plots and Figures
 plot_bar_nation_wise_participation = dv.nation_wise_participation(df, default_theme)
+plot_scatter_nation_wise_over_performing_players = dv.nation_over_performing_players(df, default_theme)
 
 
 # Application layout
@@ -60,6 +61,11 @@ app.layout = html.Div(
                                 "Nation-wise Participation",
                                 className="list-group-item list-group-item-action",
                                 href="#barPlot_nationWiseParticipation",
+                            ),
+                            html.A(
+                                "Over-performing Players",
+                                className="list-group-item list-group-item-action",
+                                href="#scatterPlot_nationWiseOverPerformers",
                             )
                         ],
                         id="menu",
@@ -75,7 +81,14 @@ app.layout = html.Div(
                                 figure=plot_bar_nation_wise_participation,
                             ),
                             id="barPlot_nationWiseParticipation",
-                        )
+                        ),
+                        dbc.Row(
+                            dcc.Graph(
+                                id="over_performing_players",
+                                figure=plot_scatter_nation_wise_over_performing_players,
+                            ),
+                            id="scatterPlot_nationWiseOverPerformers",
+                        ),
                     ],
                     className="scrollspy-example col",
                     **{"data-spy": "scroll", "data-offset": "0", "data-target": "#menu"}
@@ -94,8 +107,18 @@ app.layout = html.Div(
 )
 def update_figure(toggle):
     template = default_theme if toggle else dark_theme
-    fig_top_food_elements_in_year_x = dv.nation_wise_participation(df, template)
-    return fig_top_food_elements_in_year_x
+    result_nation_wise_participation = dv.nation_wise_participation(df, template)
+    return result_nation_wise_participation
+
+
+@app.callback(
+    Output("over_performing_players", "figure"),
+    Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
+)
+def update_figure(toggle):
+    template = default_theme if toggle else dark_theme
+    result_over_performing_players = dv.nation_over_performing_players(df, template)
+    return result_over_performing_players
 
 
 # Run the application
