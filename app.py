@@ -105,6 +105,11 @@ plot_histogram_age_distribution = dv.age_distribution(
     default_theme
 )
 
+plot_scatter_market_value_and_wage = dv.distibution_of_market_value_and_wage(
+    df,
+    default_theme
+)
+
 # Application layout
 app.layout = html.Div([
     dbc.Card(
@@ -273,6 +278,32 @@ app.layout = html.Div([
                     width=6
                 ),
             ], align='center'),
+            html.Br(),
+            html.Br(),
+
+            # 1-Text Header Row
+            dbc.Row([
+                dbc.Col([
+                    init_text_field(
+                        "Market Value vs Wage Distribution",
+                        "#scatterPlot_marketValueAndWage"
+                    )
+                ], width=12, align='center')
+            ], align='center'),
+            html.Br(),
+            # 1-Plot Row
+            dbc.Row([
+                dbc.Col([
+                    init_figure(
+                        "market_value_and_wage",
+                        plot_scatter_market_value_and_wage
+                    )
+                ],
+                    id="scatterPlot_marketValueAndWage",
+                    width=12,
+                    align='center'
+                ),
+            ], align='center')
 
 
         ], style={'background-color': '#fafafa'})

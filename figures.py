@@ -102,10 +102,11 @@ def age_distribution(fifa: pd.DataFrame, template: str):
     fig=px.bar(age_cnt,x='Age',y='Counts',color='Counts',title='Agewise Player distribution in FIFA')
     return fig
 
-def distibution_of_market_value_and_wage(fifa: pd.DataFrame):
+def distibution_of_market_value_and_wage(fifa: pd.DataFrame, template: str):
     """
     This function returns a scatter plot of the Market Value and Wage distribution of the players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
+    :param template: application theme
     :return: A scatter plot of the Market Value and Wage distribution of the players in the FIFA game.
     """
     cost_prop=fifa[['Name','Club','Nationality','Wage','Value','BP']]
