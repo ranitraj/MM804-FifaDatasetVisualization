@@ -139,7 +139,7 @@ app.layout = html.Div([
             dbc.Row(
                 dbc.Col(
                     html.Strong(
-                        "FIFA: International Federation of Association Football",
+                        "FIFA 21 Men's Dataset from Kaggle",
                         className="display-6 mb-3 text-danger text-center",
                     ),
                     class_name="center-flex",
