@@ -120,8 +120,14 @@ plot_scatter_highest_potential = dv.highest_potential(
     default_theme
 )
 
-plot_radar_overall_attributes = dv.overall_attributes(
+# plot_radar_overall_attributes = dv.overall_attributes(
+#     df,
+#     default_theme
+# )
+
+plot_get_similar_players = dv.get_similar_players(
     df,
+    "Lionel Messi",
     default_theme
 )
 
@@ -359,6 +365,32 @@ app.layout = html.Div([
                     width=6
                 ),
             ], align='center'),
+            # html.Br(),
+            # html.Br(),
+            #
+            # # 1-Text Header Row
+            # dbc.Row([
+            #     dbc.Col([
+            #         init_text_field(
+            #             "Overall Attributes",
+            #             "#radarPlot_overallAttributes"
+            #         )
+            #     ], width=12, align='center')
+            # ], align='center'),
+            # html.Br(),
+            # # 1-Plot Row
+            # dbc.Row([
+            #     dbc.Col([
+            #         init_figure(
+            #             "overall_attributes",
+            #             plot_radar_overall_attributes
+            #         )
+            #     ],
+            #         id="radarPlot_overallAttributes",
+            #         width=12,
+            #         align='center'
+            #     ),
+            # ], align='center'),
             html.Br(),
             html.Br(),
 
@@ -366,8 +398,8 @@ app.layout = html.Div([
             dbc.Row([
                 dbc.Col([
                     init_text_field(
-                        "Overall Attributes",
-                        "#radarPlot_overallAttributes"
+                        "Similar Player Finders",
+                        "#plot_FindSimilarPlayers"
                     )
                 ], width=12, align='center')
             ], align='center'),
@@ -376,11 +408,11 @@ app.layout = html.Div([
             dbc.Row([
                 dbc.Col([
                     init_figure(
-                        "overall_attributes",
-                        plot_radar_overall_attributes
+                        "similar_players",
+                        plot_get_similar_players
                     )
                 ],
-                    id="radarPlot_overallAttributes",
+                    id="plot_FindSimilarPlayers",
                     width=12,
                     align='center'
                 ),
@@ -442,6 +474,16 @@ def update_figure(toggle):
     template = default_theme if toggle else dark_theme
     result_height_weight_variation = dv.height_vs_weight_variation(df, template)
     return result_height_weight_variation
+
+
+@app.callback(
+    Output("similar_players", "figure"),
+    Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
+)
+def update_figure(toggle):
+    template = default_theme if toggle else dark_theme
+    result_similar_players = dv.get_similar_players(df, "Lionel Messi", template)
+    return result_similar_players
 
 
 # Run the application
