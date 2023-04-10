@@ -110,6 +110,16 @@ plot_scatter_market_value_and_wage = dv.distibution_of_market_value_and_wage(
     default_theme
 )
 
+plot_scatter_best_players = dv.best_players(
+    df,
+    default_theme
+)
+
+plot_scatter_highest_potential = dv.highest_potential(
+    df,
+    default_theme
+)
+
 # Application layout
 app.layout = html.Div([
     dbc.Card(
@@ -303,8 +313,47 @@ app.layout = html.Div([
                     width=12,
                     align='center'
                 ),
-            ], align='center')
+            ], align='center'),
+            html.Br(),
+            html.Br(),
 
+            # 2-Text Header Rows
+            dbc.Row([
+                dbc.Col([
+                    init_text_field(
+                        "Best Players",
+                        "#scatterPlot_bestPlayers"
+                    )
+                ], width=6),
+                dbc.Col([
+                    init_text_field(
+                        "Players with Highest Potential",
+                        "#scatterPlot_highestPotential"
+                    )
+                ], width=6)
+            ], align='center'),
+            html.Br(),
+            # 2-Plot Rows
+            dbc.Row([
+                dbc.Col([
+                    init_figure(
+                        "best_players",
+                        plot_scatter_best_players
+                    )
+                ],
+                    id="scatterPlot_bestPlayers",
+                    width=6
+                ),
+                dbc.Col([
+                    init_figure(
+                        "highest_potential",
+                        plot_scatter_highest_potential
+                    )
+                ],
+                    id="scatterPlot_highestPotential",
+                    width=6
+                ),
+            ], align='center'),
 
         ], style={'background-color': '#fafafa'})
     )
