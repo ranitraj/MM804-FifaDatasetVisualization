@@ -125,11 +125,11 @@ plot_scatter_highest_potential = dv.highest_potential(
 #     default_theme
 # )
 
-plot_get_similar_players = dv.get_similar_players(
-    df,
-    "Lionel Messi",
-    default_theme
-)
+# plot_get_similar_players = dv.get_similar_players(
+#     df,
+#     "Lionel Messi",
+#     default_theme
+# )
 
 # Application layout
 app.layout = html.Div([
@@ -391,32 +391,32 @@ app.layout = html.Div([
             #         align='center'
             #     ),
             # ], align='center'),
-            html.Br(),
-            html.Br(),
-
-            # 1-Text Header Row
-            dbc.Row([
-                dbc.Col([
-                    init_text_field(
-                        "Similar Player Finders",
-                        "#plot_FindSimilarPlayers"
-                    )
-                ], width=12, align='center')
-            ], align='center'),
-            html.Br(),
-            # 1-Plot Row
-            dbc.Row([
-                dbc.Col([
-                    init_figure(
-                        "similar_players",
-                        plot_get_similar_players
-                    )
-                ],
-                    id="plot_FindSimilarPlayers",
-                    width=12,
-                    align='center'
-                ),
-            ], align='center'),
+            # html.Br(),
+            # html.Br(),
+            #
+            # # 1-Text Header Row
+            # dbc.Row([
+            #     dbc.Col([
+            #         init_text_field(
+            #             "Similar Player Finders",
+            #             "#plot_FindSimilarPlayers"
+            #         )
+            #     ], width=12, align='center')
+            # ], align='center'),
+            # html.Br(),
+            # # 1-Plot Row
+            # dbc.Row([
+            #     dbc.Col([
+            #         init_figure(
+            #             "similar_players",
+            #             plot_get_similar_players
+            #         )
+            #     ],
+            #         id="plot_FindSimilarPlayers",
+            #         width=12,
+            #         align='center'
+            #     ),
+            # ], align='center'),
 
         ], style={'background-color': '#fafafa'})
     )
@@ -426,56 +426,6 @@ app.layout = html.Div([
 
 
 # Method Callbacks
-@app.callback(
-    Output("nation_wise_participation", "figure"),
-    Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
-)
-def update_figure(toggle):
-    template = default_theme if toggle else dark_theme
-    result_nation_wise_participation = dv.nation_wise_participation(df, template)
-    return result_nation_wise_participation
-
-
-@app.callback(
-    Output("over_performing_players", "figure"),
-    Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
-)
-def update_figure(toggle):
-    template = default_theme if toggle else dark_theme
-    result_over_performing_players = dv.nation_over_performing_players(df, template)
-    return result_over_performing_players
-
-
-@app.callback(
-    Output("club_wise_players", "figure"),
-    Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
-)
-def update_figure(toggle):
-    template = default_theme if toggle else dark_theme
-    result_club_wise_players = dv.club_wise_player(df, template)
-    return result_club_wise_players
-
-
-@app.callback(
-    Output("club_wise_over_performing_players", "figure"),
-    Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
-)
-def update_figure(toggle):
-    template = default_theme if toggle else dark_theme
-    result_club_wise_over_performing_players = dv.club_wise_over_performing_players(df, template)
-    return result_club_wise_over_performing_players
-
-
-@app.callback(
-    Output("height_weight_variation", "figure"),
-    Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
-)
-def update_figure(toggle):
-    template = default_theme if toggle else dark_theme
-    result_height_weight_variation = dv.height_vs_weight_variation(df, template)
-    return result_height_weight_variation
-
-
 @app.callback(
     Output("similar_players", "figure"),
     Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")

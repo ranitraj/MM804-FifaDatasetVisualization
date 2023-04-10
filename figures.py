@@ -278,7 +278,7 @@ def get_similar_players(fifa: pd.DataFrame, player_name: str, template: str):
         req = urllib.request.Request(url, headers=headers)
         response = urllib.request.urlopen(req)
         with open('1.png', 'wb') as f:
-        f.write(response.read())
+            f.write(response.read())
 
         pic = Image.open("1.png")
         fig.add_layout_image(
