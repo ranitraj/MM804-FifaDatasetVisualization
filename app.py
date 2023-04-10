@@ -366,8 +366,8 @@ app.layout = html.Div([
                         "Overall Attributes",
                         "#radarPlot_overallAttributes"
                     )
-                ], width=12, align='center')
-            ], align='center'),
+                ], width=5, align='center')
+            ], justify="center", align="center", className="h-50"),
             html.Br(),
             # 1-Plot Row
             dbc.Row([
@@ -378,10 +378,9 @@ app.layout = html.Div([
                     )
                 ],
                     id="radarPlot_overallAttributes",
-                    width=12,
-                    align='center'
+                    width=5
                 ),
-            ], align='center'),
+            ],  justify="center", align="center", className="h-50"),
             html.Br(),
             html.Br(),
 
@@ -392,7 +391,7 @@ app.layout = html.Div([
                         "Similar Player Finders",
                         "#plot_FindSimilarPlayers"
                     )
-                ], width=12, align='center')
+                ], width=12)
             ], align='center'),
             html.Br(),
             # 1-Plot Row
