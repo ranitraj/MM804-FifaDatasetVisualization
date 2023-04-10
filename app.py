@@ -120,6 +120,11 @@ plot_scatter_highest_potential = dv.highest_potential(
     default_theme
 )
 
+plot_radar_overall_attributes = dv.overall_attributes(
+    df,
+    default_theme
+)
+
 # Application layout
 app.layout = html.Div([
     dbc.Card(
@@ -352,6 +357,32 @@ app.layout = html.Div([
                 ],
                     id="scatterPlot_highestPotential",
                     width=6
+                ),
+            ], align='center'),
+            html.Br(),
+            html.Br(),
+
+            # 1-Text Header Row
+            dbc.Row([
+                dbc.Col([
+                    init_text_field(
+                        "Overall Attributes",
+                        "#radarPlot_overallAttributes"
+                    )
+                ], width=12, align='center')
+            ], align='center'),
+            html.Br(),
+            # 1-Plot Row
+            dbc.Row([
+                dbc.Col([
+                    init_figure(
+                        "overall_attributes",
+                        plot_radar_overall_attributes
+                    )
+                ],
+                    id="radarPlot_overallAttributes",
+                    width=12,
+                    align='center'
                 ),
             ], align='center'),
 

@@ -177,10 +177,11 @@ def highest_potential(fifa: pd.DataFrame, template: str):
     return fig
 
 
-def overall_attributes(fifa: pd.DataFrame):
+def overall_attributes(fifa: pd.DataFrame, template: str):
     """
     This function returns a radar plot of the overall attributes of the players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
+    :param template: application theme
     :return: A radar plot of the overall attributes of the players in the FIFA game.
     """
     pos_head = fifa.groupby('BP').apply(lambda x: np.average(x['Heading Accuracy'])).reset_index(
