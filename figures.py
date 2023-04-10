@@ -7,11 +7,10 @@ import urllib.request
 from PIL import Image
 
 
-def nation_wise_participation(fifa: pd.DataFrame, template: str):
+def nation_wise_participation(fifa: pd.DataFrame):
     """
     This function returns a bar plot of the top 20 nations with the highest number of players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
-    :param template: application theme
     :return: A bar plot of the top 20 nations with the highest number of players in the FIFA game.
     """
     nat_cnt = fifa.groupby('Nationality').apply(lambda x: x['Name'].count()).reset_index(name='Counts')
@@ -22,11 +21,10 @@ def nation_wise_participation(fifa: pd.DataFrame, template: str):
     return fig
 
 
-def nation_over_performing_players(fifa: pd.DataFrame, template: str):
+def nation_over_performing_players(fifa: pd.DataFrame):
     """
     This function returns a scatter plot of the Nationwise Player counts and Average Potential
     :param fifa: The dataframe containing the FIFA game data
-    :param template: application theme
     :return: A scatter plot of the Nationwise Player counts and Average Potential
     """
     cnt_best_avg = fifa.groupby('Nationality').apply(lambda x: np.average(x['OVA'])).reset_index(name='Overall Ratings')
@@ -40,11 +38,10 @@ def nation_over_performing_players(fifa: pd.DataFrame, template: str):
     return fig
 
 
-def club_wise_player(fifa: pd.DataFrame, template: str):
+def club_wise_player(fifa: pd.DataFrame):
     """
     This function returns a scatter plot of the Clubwise Player counts in FIFA 21
     :param fifa: The dataframe containing the FIFA game data
-    :param template: application theme
     :return: A scatter plot of the Clubwise Player counts in FIFA 21
     """
     clb_cnt = fifa.groupby('Club').apply(lambda x: x['Name'].count()).reset_index(name='Counts')
@@ -55,11 +52,10 @@ def club_wise_player(fifa: pd.DataFrame, template: str):
     return fig
 
 
-def club_wise_over_performing_players(fifa: pd.DataFrame, template: str):
+def club_wise_over_performing_players(fifa: pd.DataFrame):
     """
     This function returns a scatter plot of the Clubwise Player counts and Average Potential
     :param fifa: The dataframe containing the FIFA game data
-    :param template: application theme
     :return: A scatter plot of the Clubwise Player counts and Average Potential
     """
     cnt_best_avg = fifa.groupby('Club').apply(lambda x: np.average(x['OVA'])).reset_index(name='Overall Ratings')
@@ -75,11 +71,10 @@ def club_wise_over_performing_players(fifa: pd.DataFrame, template: str):
 
 ## player stats
 
-def height_vs_weight_variation(fifa: pd.DataFrame, template: str):
+def height_vs_weight_variation(fifa: pd.DataFrame):
     """
     This function returns a scatter plot of the Height vs Weight Variation of the players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
-    :param template: application theme
     :return: A scatter plot of the Height vs Weight Variation of the players in the FIFA game.
     """
     props = fifa[['Name', 'Nationality', 'Club', 'Height', 'Weight']]
@@ -93,11 +88,10 @@ def height_vs_weight_variation(fifa: pd.DataFrame, template: str):
     return fig
 
 
-def players_position(fifa: pd.DataFrame, template: str):
+def players_position(fifa: pd.DataFrame):
     """
     This function returns a bar plot of the top 20 positions with the highest number of players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
-    :param template: application theme
     :return: A bar plot of the top 20 positions with the highest number of players in the FIFA game.
     """
     pos_cnt = fifa.groupby('BP').apply(lambda x: x['Name'].count()).reset_index(name='Counts')
@@ -107,11 +101,10 @@ def players_position(fifa: pd.DataFrame, template: str):
     return fig
 
 
-def age_distribution(fifa: pd.DataFrame, template: str):
+def age_distribution(fifa: pd.DataFrame):
     """
     This function returns a histogram of the Age distribution of the players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
-    :param template: application theme
     :return: A histogram of the Age distribution of the players in the FIFA game.
     """
     age_cnt = fifa.groupby('Age').apply(lambda x: x['Name'].count()).reset_index(name='Counts')
@@ -119,11 +112,10 @@ def age_distribution(fifa: pd.DataFrame, template: str):
     return fig
 
 
-def distibution_of_market_value_and_wage(fifa: pd.DataFrame, template: str):
+def distibution_of_market_value_and_wage(fifa: pd.DataFrame):
     """
     This function returns a scatter plot of the Market Value and Wage distribution of the players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
-    :param template: application theme
     :return: A scatter plot of the Market Value and Wage distribution of the players in the FIFA game.
     """
     cost_prop = fifa[['Name', 'Club', 'Nationality', 'Wage', 'Value', 'BP']]
@@ -145,11 +137,10 @@ def distibution_of_market_value_and_wage(fifa: pd.DataFrame, template: str):
     return fig
 
 
-def best_players(fifa: pd.DataFrame, template: str):
+def best_players(fifa: pd.DataFrame):
     """
     This function returns a scatter plot of the top 100 players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
-    :param template: application theme
     :return: A scatter plot of the top 100 players in the FIFA game.
     """
     top_play = fifa[['Name', 'OVA', "Age", 'Club', 'BP']]
@@ -160,11 +151,10 @@ def best_players(fifa: pd.DataFrame, template: str):
     return fig
 
 
-def highest_potential(fifa: pd.DataFrame, template: str):
+def highest_potential(fifa: pd.DataFrame):
     """
     This function returns a scatter plot of the top 50 players with the highest potential in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
-    :param template: application theme
     :return: A scatter plot of the top 50 players with the highest potential in the FIFA game.
     """
     cond_1 = fifa['OVA'] != fifa['POT']
@@ -179,11 +169,10 @@ def highest_potential(fifa: pd.DataFrame, template: str):
     return fig
 
 
-def overall_attributes(fifa: pd.DataFrame, template: str):
+def overall_attributes(fifa: pd.DataFrame):
     """
     This function returns a radar plot of the overall attributes of the players in the FIFA game.
     :param fifa: The dataframe containing the FIFA game data
-    :param template: application theme
     :return: A radar plot of the overall attributes of the players in the FIFA game.
     """
     pos_head = fifa.groupby('BP').apply(lambda x: np.average(x['Heading Accuracy'])).reset_index(
@@ -233,7 +222,7 @@ def overall_attributes(fifa: pd.DataFrame, template: str):
     return fig
 
 
-def get_similar_players(fifa: pd.DataFrame, player_name: str, template: str):
+def get_similar_players(fifa: pd.DataFrame, player_name: str):
     normalized_data = fifa
     normalized_data = normalized_data.drop(columns=['Age', 'Nationality', 'Club', 'Value',
             'Wage', 'Joined','Release Clause','Height', 'Weight', 'Name','Goalkeeping', 'GK Diving', 'GK Handling',

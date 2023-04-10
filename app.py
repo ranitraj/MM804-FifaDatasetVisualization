@@ -74,64 +74,52 @@ sorted = df.sort_values(by='OVA',ascending=False)
 names = sorted['Name'].values[:100]
 # Plots and Figures
 plot_bar_nation_wise_participation = dv.nation_wise_participation(
-    df,
-    default_theme
+    df
 )
 
 plot_scatter_nation_wise_over_performing_players = dv.nation_over_performing_players(
-    df,
-    default_theme
+    df
 )
 
 plot_scatter_club_wise_players = dv.club_wise_player(
-    df,
-    default_theme
+    df
 )
 
 plot_scatter_club_wise_over_performing_players = dv.club_wise_over_performing_players(
-    df,
-    default_theme
+    df
 )
 
 plot_scatter_height_vs_weight_variation = dv.height_vs_weight_variation(
-    df,
-    default_theme
+    df
 )
 
 plot_bar_player_position = dv.players_position(
-    df,
-    default_theme
+    df
 )
 
 plot_histogram_age_distribution = dv.age_distribution(
-    df,
-    default_theme
+    df
 )
 
 plot_scatter_market_value_and_wage = dv.distibution_of_market_value_and_wage(
-    df,
-    default_theme
+    df
 )
 
 plot_scatter_best_players = dv.best_players(
-    df,
-    default_theme
+    df
 )
 
 plot_scatter_highest_potential = dv.highest_potential(
-    df,
-    default_theme
+    df
 )
 
 plot_radar_overall_attributes = dv.overall_attributes(
-    df,
-    default_theme
+    df
 )
 
 plot_get_similar_players = dv.get_similar_players(
     df,
-    names[0],
-    default_theme
+    names[0]
 )
 
 # Application layout
@@ -396,7 +384,7 @@ app.layout = html.Div([
             ], align='center'),
             html.Br(),
             html.Br(),
-            
+
             # 1-Text Header Row
             dbc.Row([
                 dbc.Col([
@@ -446,7 +434,7 @@ app.layout = html.Div([
 )
 def update_figure(name):
     # template = default_theme if toggle else dark_theme
-    plot_get_similar_players = dv.get_similar_players(df, name, '__')
+    plot_get_similar_players = dv.get_similar_players(df, name)
     return plot_get_similar_players
 
 
