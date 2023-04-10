@@ -70,6 +70,8 @@ theme_switcher = dbt.ThemeSwitchAIO(
 # Dataset
 df = pd.read_csv(os.path.join("assets", "cleaned_fifa21_male2.csv"))
 
+sorted = df.sort_values(by='OVA',ascending=False)
+names = sorted['Name'].values[:100]
 # Plots and Figures
 plot_bar_nation_wise_participation = dv.nation_wise_participation(
     df,
@@ -128,7 +130,7 @@ plot_radar_overall_attributes = dv.overall_attributes(
 
 plot_get_similar_players = dv.get_similar_players(
     df,
-    "L. Messi",
+    names[0],
     default_theme
 )
 
@@ -407,6 +409,16 @@ app.layout = html.Div([
             html.Br(),
             # 1-Plot Row
             dbc.Row([
+                dbc.Col(
+                    dcc.Dropdown(
+                    id="name",
+                    options=names,
+                    value=names[0],
+                    maxHeight=300,
+            ),
+                width={"size": 3},
+                class_name="mb-2",
+            ),
                 dbc.Col([
                     init_figure(
                         "similar_players",
@@ -429,12 +441,13 @@ app.layout = html.Div([
 # Method Callbacks
 @app.callback(
     Output("similar_players", "figure"),
-    Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
+    Input("name" , "value"),
+    # Input(dbt.ThemeSwitchAIO.ids.switch("theme"), "value")
 )
-def update_figure(toggle):
-    template = default_theme if toggle else dark_theme
-    result_similar_players = dv.get_similar_players(df, "Lionel Messi", template)
-    return result_similar_players
+def update_figure(name):
+    # template = default_theme if toggle else dark_theme
+    plot_get_similar_players = dv.get_similar_players(df, name, '__')
+    return plot_get_similar_players
 
 
 # Run the application
