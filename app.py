@@ -8,7 +8,8 @@ import dash_bootstrap_templates as dbt
 
 from dash import Dash, dcc, html
 from dash.dependencies import Input, Output
-
+import warnings
+warnings.filterwarnings("ignore")
 
 # Text field
 def init_text_field(value: str, reference: str):
@@ -120,16 +121,16 @@ plot_scatter_highest_potential = dv.highest_potential(
     default_theme
 )
 
-# plot_radar_overall_attributes = dv.overall_attributes(
-#     df,
-#     default_theme
-# )
+plot_radar_overall_attributes = dv.overall_attributes(
+    df,
+    default_theme
+)
 
-# plot_get_similar_players = dv.get_similar_players(
-#     df,
-#     "Lionel Messi",
-#     default_theme
-# )
+plot_get_similar_players = dv.get_similar_players(
+    df,
+    "L. Messi",
+    default_theme
+)
 
 # Application layout
 app.layout = html.Div([
@@ -365,58 +366,58 @@ app.layout = html.Div([
                     width=6
                 ),
             ], align='center'),
-            # html.Br(),
-            # html.Br(),
-            #
-            # # 1-Text Header Row
-            # dbc.Row([
-            #     dbc.Col([
-            #         init_text_field(
-            #             "Overall Attributes",
-            #             "#radarPlot_overallAttributes"
-            #         )
-            #     ], width=12, align='center')
-            # ], align='center'),
-            # html.Br(),
-            # # 1-Plot Row
-            # dbc.Row([
-            #     dbc.Col([
-            #         init_figure(
-            #             "overall_attributes",
-            #             plot_radar_overall_attributes
-            #         )
-            #     ],
-            #         id="radarPlot_overallAttributes",
-            #         width=12,
-            #         align='center'
-            #     ),
-            # ], align='center'),
-            # html.Br(),
-            # html.Br(),
-            #
-            # # 1-Text Header Row
-            # dbc.Row([
-            #     dbc.Col([
-            #         init_text_field(
-            #             "Similar Player Finders",
-            #             "#plot_FindSimilarPlayers"
-            #         )
-            #     ], width=12, align='center')
-            # ], align='center'),
-            # html.Br(),
-            # # 1-Plot Row
-            # dbc.Row([
-            #     dbc.Col([
-            #         init_figure(
-            #             "similar_players",
-            #             plot_get_similar_players
-            #         )
-            #     ],
-            #         id="plot_FindSimilarPlayers",
-            #         width=12,
-            #         align='center'
-            #     ),
-            # ], align='center'),
+            html.Br(),
+            html.Br(),
+            
+            # 1-Text Header Row
+            dbc.Row([
+                dbc.Col([
+                    init_text_field(
+                        "Overall Attributes",
+                        "#radarPlot_overallAttributes"
+                    )
+                ], width=12, align='center')
+            ], align='center'),
+            html.Br(),
+            # 1-Plot Row
+            dbc.Row([
+                dbc.Col([
+                    init_figure(
+                        "overall_attributes",
+                        plot_radar_overall_attributes
+                    )
+                ],
+                    id="radarPlot_overallAttributes",
+                    width=12,
+                    align='center'
+                ),
+            ], align='center'),
+            html.Br(),
+            html.Br(),
+            
+            # 1-Text Header Row
+            dbc.Row([
+                dbc.Col([
+                    init_text_field(
+                        "Similar Player Finders",
+                        "#plot_FindSimilarPlayers"
+                    )
+                ], width=12, align='center')
+            ], align='center'),
+            html.Br(),
+            # 1-Plot Row
+            dbc.Row([
+                dbc.Col([
+                    init_figure(
+                        "similar_players",
+                        plot_get_similar_players
+                    )
+                ],
+                    id="plot_FindSimilarPlayers",
+                    width=12,
+                    align='center'
+                ),
+            ], align='center'),
 
         ], style={'background-color': '#fafafa'})
     )

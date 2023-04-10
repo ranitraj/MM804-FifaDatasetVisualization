@@ -3,6 +3,8 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics.pairwise import cosine_similarity
 import plotly.express as px
+import urllib.request
+from PIL import Image
 
 
 def nation_wise_participation(fifa: pd.DataFrame, template: str):
@@ -295,4 +297,4 @@ def get_similar_players(fifa: pd.DataFrame, player_name: str, template: str):
         xanchor="right",
         yanchor="bottom"
     ))
-    return fig, indexes
+    return fig
